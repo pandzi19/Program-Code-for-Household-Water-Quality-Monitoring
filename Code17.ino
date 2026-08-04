@@ -82,8 +82,12 @@ unsigned long waktuKirimRealtimeTerakhir = 0;
 int jamTerakhirGrafik = -1;
 
 bool statusKoneksiFirebase = false;
+unsigned long totalWaktuTransmisi = 0;
 unsigned long totalPaketDikirim = 0;
 unsigned long totalPaketGagal = 0;
+unsigned long totalPaketBerhasil = 0;
+float rataRataDelay = 0;
+float persentasePacketLoss = 0;
 
 float bacaVoltaseMedian(int channel, int *simpanADC = nullptr) {
   int sampelADC[30];
@@ -289,17 +293,21 @@ void kirimRealtimeFirebase(float rataRataPH, float rataRataTDS, float rataRataKe
   totalPaketDikirim++;
 
   if (Firebase.RTDB.setJSON(&dataFirebase, "/water_quality", &jsonRealtime)) {
-    unsigned long waktuKeterlambatan = millis() - waktuMulaiKirim;
-    float persentasePaketGagal = ((float)totalPaketGagal / totalPaketDikirim) * 100.0;
+    unsigned long delaySaatIni = millis() - waktuMulaiKirim;
+    totalWaktuTransmisi += delaySaatIni;
+    totalPaketBerhasil++;
+
+    rataRataDelay = (float)totalWaktuTransmisi / totalPaketBerhasil;
+    persentasePacketLoss = ((float)(totalPaketDikirim - totalPaketBerhasil) / totalPaketDikirim) * 100.0;
 
     Serial.println("\n===== QoS =====");
-    Serial.printf("Keterlambatan : %lu ms\n", waktuKeterlambatan);
-    Serial.printf("Paket Gagal   : %.2f %%\n", persentasePaketGagal);
+    Serial.printf("Rata-Rata Delay : %.2f ms\n", rataRataDelay);
+    Serial.printf("Packet Loss     : %.2f %%\n", persentasePacketLoss);
     Serial.println("================");
 
     FirebaseJson jsonKualitasJaringan;
-    jsonKualitasJaringan.set("delay_ms", waktuKeterlambatan);
-    jsonKualitasJaringan.set("packet_loss_percent", persentasePaketGagal);
+    jsonKualitasJaringan.set("delay_ms", rataRataDelay);
+    jsonKualitasJaringan.set("packet_loss_percent", persentasePacketLoss);
     jsonKualitasJaringan.set("timestamp/.sv", "timestamp");
 
     struct tm waktuJaringan;
@@ -323,7 +331,6 @@ void kirimRealtimeFirebase(float rataRataPH, float rataRataTDS, float rataRataKe
       Serial.printf("Status Firebase: Gagal menyimpan log jaringan! %s\n", dataFirebase.errorReason().c_str());
     }
   } else {
-    totalPaketGagal++;
     Serial.printf("Status Firebase: Gagal update data realtime! %s\n", dataFirebase.errorReason().c_str());
   }
 }
