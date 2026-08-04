@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PanTawAir - Water Monitoring System</title>
+
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <meta name="description"
+        content="Dashboard Pantau Air realtime untuk monitoring kualitas air secara akurat dan cepat." />
+    <meta name="google-site-verification" content="CoFwQZRZbFIEwza0mVjUFlC9tS--O7O2WFg3NrMPE2A" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "PanTawAir",
+      "url": "https://pantauair.web.id/"
+    }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Script untuk mencegah flicker sidebar saat pindah halaman -->
+    <script>
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.documentElement.classList.add('sidebar-collapsed');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="flex flex-col h-screen overflow-hidden text-slate-900 font-sans p-4 md:p-4 sm:p-2 gap-4 md:gap-4 sm:gap-2">
+
+    <!-- 1. TOP HEADER -->
+    <header
+        class="header-enhanced rounded-[20px] md:rounded-xl sm:rounded-lg px-6 md:px-4 sm:px-3 py-3.5 md:py-3 sm:py-2 flex justify-between items-center shrink-0 w-full z-50 animate-fade-in">
+        <div class="flex items-center gap-5 md:gap-3 sm:gap-2 text-slate-800">
+            <div class="flex items-center gap-3 md:gap-2 sm:gap-1.5 mr-2">
+                <button
+                    class="sidebar-toggle-btn text-slate-500 hover:text-blue-500 transition-colors p-2 sm:p-1.5 rounded-lg hover:bg-blue-50 flex items-center justify-center shrink-0 md:hidden">
+                    <i class="fas fa-bars text-lg sm:text-base"></i>
+                </button>
+                <div class="text-blue-500">
+                    <i class="fas fa-droplet text-xl sm:text-lg"></i>
+                </div>
+                <h1 class="text-base sm:text-sm font-extrabold tracking-tight brand-gradient">PanTawAir</h1>
+            </div>
+            <div class="h-6 sm:h-4 w-px bg-blue-200/50 hidden md:block"></div>
+            <h2 class="text-[15px] sm:text-xs font-black tracking-widest uppercase hidden md:block text-blue-900/70">
+                DASHBOARD</h2>
+            <div class="h-5 w-px bg-blue-200/50 hidden md:block"></div>
+            <p class="text-[15px] sm:text-xs font-semibold text-slate-500 hidden sm:block">Real-time Monitoring</p>
+        </div>
+        <div class="flex items-center gap-6 md:gap-4 sm:gap-2">
+            <div class="hidden lg:flex items-center gap-4 md:gap-2">
+                <p class="text-[13px] sm:text-[11px] font-medium text-slate-400" id="header-date-display">Friday, 28
+                    February 2025</p>
+                <div class="h-6 w-px bg-blue-200/50"></div>
+            </div>
+            <div class="flex items-center gap-5 md:gap-3">
+                <div class="text-right hidden sm:block">
+                    <p id="display-nama-user" class="text-[14px] sm:text-xs font-extrabold text-slate-800">Administrator
+                    </p>
+                    <p class="text-[11px] sm:text-[9px] font-bold text-blue-400 uppercase tracking-wider">user admin</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- BOTTOM WRAPPER -->
+    <div class="flex flex-1 gap-4 md:gap-3 sm:gap-2 overflow-hidden min-h-0">
+
+        <!-- 2. LEFT SIDEBAR -->
+        <aside id="sidebar"
+            class="w-[200px] md:w-[160px] sidebar-enhanced rounded-2xl md:rounded-xl sm:rounded-lg card-shadow flex flex-col shrink-0 z-40 overflow-hidden py-5 md:py-3 sm:py-2 transition-all duration-300 animate-fade-in-delay-1">
+            <div class="px-3 mb-6 hidden md:flex">
+                <button
+                    class="sidebar-toggle-btn text-slate-400 hover:text-blue-500 transition-colors px-4 py-2.5 mx-1 rounded-[12px] hover:bg-blue-50 flex items-center justify-end w-full">
+                    <i class="fas sidebar-icon-collapse text-[16px] w-5 text-center"></i>
+                </button>
+            </div>
+
+            <nav class="flex-1 px-3 space-y-6 overflow-y-auto relative z-10">
+
+                <a href="index.html"
+                    class="nav-active-glow flex items-center gap-3 px-4 py-2.5 mx-1 text-white rounded-[12px] font-bold text-[13px] transition-all">
+                    <i class="fas fa-chart-pie text-[16px] w-5 text-center"></i> <span
+                        class="sidebar-text">Dashboard</span>
+                </a>
+                <a href="log-alert.html"
+                    class="nav-hover-shimmer flex items-center gap-3 px-4 py-2.5 mx-1 text-slate-400 rounded-[12px] font-semibold text-[13px] transition-all">
+                    <i class="fas fa-exclamation-triangle text-[16px] w-5 text-center"></i> <span
+                        class="sidebar-text">Log Alert</span>
+                </a>
+                <a href="maintenance.html"
+                    class="nav-hover-shimmer flex items-center gap-3 px-4 py-2.5 mx-1 text-slate-400 rounded-[12px] font-semibold text-[13px] transition-all">
+                    <i class="fas fa-tools text-[16px] w-5 text-center"></i> <span
+                        class="sidebar-text">Maintenance</span>
+                </a>
+            </nav>
+
+            <div class="px-4 mt-auto pt-4 relative z-10">
+                <button onclick="logout()"
+                    class="logout-btn-enhanced flex items-center gap-3 w-full px-4 py-2.5 text-red-500 bg-white hover:bg-red-50 rounded-[12px] font-bold text-[13px] transition-all border border-red-200 shadow-sm shadow-red-500/10">
+                    <i class="fas fa-sign-out-alt text-[16px] w-5 text-center"></i> <span class="sidebar-text">Log
+                        Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- 3. MAIN CONTENT AREA -->
+        <div class="flex-1 overflow-y-auto flex flex-col relative">
+            <div id="toast-container"></div>
+            <div id="offline-banner">⚠ Koneksi ke server terputus — menampilkan data terakhir</div>
+
+            <main class="flex-1 flex flex-col gap-4 md:gap-3 sm:gap-2 min-h-0">
+
+                <!-- MONITORING HUB: Orbital + Activity Panel -->
+                <div class="flex gap-4 md:gap-3 sm:gap-2 flex-1 min-h-0 flex-col md:flex-row">
+
+                    <!-- ORBITAL MONITORING: 3 Kolom untuk Desktop, 1 kolom untuk Mobile -->
+                    <div
+                        class="flex-1 content-card rounded-xl md:rounded-lg sm:rounded flex items-center justify-center p-6 md:p-4 sm:p-3 overflow-hidden animate-fade-in-delay-1">
+                        <div class="orbital-layout">
+
+                            <!-- KIRI: pH + Suhu -->
+                            <div class="orbital-side">
+                                <div class="orbital-cell mr-32 md:mr-24 sm:mr-0">
+                                    <!-- INFO WAKTU UPDATE TERAKHIR -->
+                                    <div id="last-update-banner" class="text-left mb-3 text-[11px] font-semibold text-slate-500 hidden">
+                                        <i class="fas fa-clock text-blue-400 mr-1"></i> Data terakhir: <span id="last-update-time">--:--</span>
+                                    </div>
+                                    <div class="sensor-card">
+                                        <span class="orbital-node-label">pH Air</span>
+                                        <div class="sensor-card-content">
+                                            <div class="orbital-node-icon bg-blue-50 text-blue-500"><i
+                                                    class="fas fa-tint"></i></div>
+                                            <div class="sensor-card-values">
+                                                <div class="orbital-value-row">
+                                                    <span id="ph-val" class="orbital-node-value">--</span>
+                                                    <span class="orbital-node-unit">pH</span>
+                                                </div>
+                                                <span class="orbital-node-standard">Standar: 6.5 – 8.5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="orbital-cell mr-32 md:mr-24 sm:mr-0">
+                                    <div class="sensor-card">
+                                        <span class="orbital-node-label">Suhu</span>
+                                        <div class="sensor-card-content">
+                                            <div class="orbital-node-icon bg-amber-50 text-amber-500"><i
+                                                    class="fas fa-temperature-high"></i></div>
+                                            <div class="sensor-card-values">
+                                                <div class="orbital-value-row">
+                                                    <span id="temp-val" class="orbital-node-value">--</span>
+                                                    <span class="orbital-node-unit">°C</span>
+                                                </div>
+                                                <span class="orbital-node-standard">Standar: Suhu udara ± 3 °C</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TENGAH: WQI Gauge -->
+                            <div class="orbital-center" id="wqi-container">
+                                <svg class="orbital-gauge" viewBox="0 0 250 250">
+                                    <circle class="gauge-track" cx="125" cy="125" r="108" />
+                                    <circle class="gauge-fill animate-glow" id="wqi-arc-fill" cx="125" cy="125"
+                                        r="108" />
+                                </svg>
+                                <div class="orbital-center-content">
+                                    <span id="wqi-label"
+                                        class="text-[10px] sm:text-[8px] font-extrabold uppercase tracking-widest text-emerald-500">Kualitas
+                                        Air</span>
+                                    <span id="wqi-score"
+                                        class="text-3xl sm:text-2xl font-extrabold text-emerald-500 mt-1">--</span>
+                                    <span id="wqi-status"
+                                        class="text-sm sm:text-xs font-bold text-emerald-500 mt-0.5">MEMUAT...</span>
+                                    <span id="wqi-desc"
+                                        class="text-[9px] sm:text-[7px] font-medium text-slate-400 mt-0.5">Menunggu
+                                        data...</span>
+                                </div>
+                                <!-- INDEKS WQI STANDARISASI DI BAWAH GAUGE -->
+                                <div
+                                    class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[260%] sm:w-[210%] flex flex-wrap justify-center gap-x-5 gap-y-2.5 z-10 pointer-events-none">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-3.5 h-3.5 rounded-full bg-[#EF4444] flex-shrink-0"></span>
+                                        <span
+                                            class="text-[12px] sm:text-[9px] font-bold text-slate-500 leading-none whitespace-nowrap">Sangat
+                                            Buruk (0-24)</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-3.5 h-3.5 rounded-full bg-[#F97316] flex-shrink-0"></span>
+                                        <span
+                                            class="text-[12px] sm:text-[9px] font-bold text-slate-500 leading-none whitespace-nowrap">Buruk
+                                            (25-49)</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-3.5 h-3.5 rounded-full bg-[#F59E0B] flex-shrink-0"></span>
+                                        <span
+                                            class="text-[12px] sm:text-[9px] font-bold text-slate-500 leading-none whitespace-nowrap">Cukup
+                                            (50-74)</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-3.5 h-3.5 rounded-full bg-[#3B82F6] flex-shrink-0"></span>
+                                        <span
+                                            class="text-[12px] sm:text-[9px] font-bold text-slate-500 leading-none whitespace-nowrap">Baik
+                                            (75-89)</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-3.5 h-3.5 rounded-full bg-[#10B981] flex-shrink-0"></span>
+                                        <span
+                                            class="text-[12px] sm:text-[9px] font-bold text-slate-500 leading-none whitespace-nowrap">Sangat
+                                            Baik (90-100)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- KANAN: Kekeruhan + TDS -->
+                            <div class="orbital-side">
+                                <div class="orbital-cell ml-32 md:ml-24 sm:ml-0">
+                                    <div class="sensor-card">
+                                        <span class="orbital-node-label">Kekeruhan</span>
+                                        <div class="sensor-card-content">
+                                            <div class="orbital-node-icon bg-violet-50 text-violet-500"><i
+                                                    class="fas fa-water"></i>
+                                            </div>
+                                            <div class="sensor-card-values">
+                                                <div class="orbital-value-row">
+                                                    <span id="turbidity-val" class="orbital-node-value">--</span>
+                                                    <span class="orbital-node-unit">NTU</span>
+                                                </div>
+                                                <span class="orbital-node-standard">Standar: 0 – 3 NTU</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="orbital-cell ml-32 md:ml-24 sm:ml-0">
+                                    <div class="sensor-card">
+                                        <span class="orbital-node-label">TDS</span>
+                                        <div class="sensor-card-content">
+                                            <div class="orbital-node-icon bg-sky-50 text-sky-500"><i
+                                                    class="fas fa-bolt"></i>
+                                            </div>
+                                            <div class="sensor-card-values">
+                                                <div class="orbital-value-row">
+                                                    <span id="tds-val" class="orbital-node-value">--</span>
+                                                    <span class="orbital-node-unit">mg/L</span>
+                                                </div>
+                                                <span class="orbital-node-standard">Standar: 0 – 300 mg/L</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ACTIVITY PANEL (Right Side — like Active Devices) -->
+                    <div
+                        class="w-[280px] md:w-[240px] sm:w-full shrink-0 content-card rounded-xl md:rounded-lg sm:rounded flex flex-col overflow-hidden p-5 md:p-4 sm:p-3 animate-fade-in-delay-2">
+                        <div class="flex justify-between items-center mb-4 md:mb-3 sm:mb-2">
+                            <h3 class="font-bold text-slate-800 text-[13px] sm:text-xs">Aktivitas Terbaru</h3>
+                            <span id="activity-count-badge"
+                                class="badge-count text-[10px] sm:text-[8px] font-bold text-blue-600 px-3 py-1 rounded-full">0
+                                entri</span>
+                        </div>
+                        <div id="activity-list" data-empty="true"
+                            class="flex-1 overflow-y-auto space-y-2 md:space-y-1.5 sm:space-y-1 pr-1 activity-panel-list">
+                            <div class="text-[11px] sm:text-[9px] text-slate-400 italic text-center mt-10">Menunggu
+                                aktivitas
+                                sensor...</div>
+                        </div>
+                        <a href="log-alert.html"
+                            class="mt-4 md:mt-3 sm:mt-2 text-center block w-full py-3 md:py-2 sm:py-1.5 bg-gradient-to-r from-blue-50 to-white hover:from-blue-100 hover:to-blue-50 border border-blue-200/50 rounded-lg transition-all text-[10px] sm:text-[8px] font-bold text-blue-600 shadow-sm">
+                            Lihat Semua Log Alert &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TREN SENSOR 24 JAM -->
+                <div class="content-card rounded-xl md:rounded-lg sm:rounded p-5 md:p-4 sm:p-3 shrink-0 animate-fade-in-delay-3"
+                    style="height:220px;">
+                    <div
+                        class="flex justify-between items-center mb-3 md:mb-2 sm:mb-1.5 flex-col md:flex-row gap-2 md:gap-0">
+                        <div class="flex items-center gap-2 sm:gap-1 chart-header-stripe">
+                            <i class="fas fa-chart-area text-blue-500"></i>
+                            <h3 class="font-bold text-slate-800 text-[13px] sm:text-xs">Tren Sensor 24 Jam
+                            </h3>
+                            <span
+                                class="text-[9px] sm:text-[7px] font-bold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100/50">Interval
+                                1 Jam</span>
+                            <input type="date" id="history-date-picker"
+                                class="ml-2 text-[10px] sm:text-[9px] font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded px-2 py-0.5 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 cursor-pointer">
+                            <button id="btn-toggle-chart"
+                                class="ml-2 text-[10px] sm:text-[9px] font-bold text-white bg-blue-500 hover:bg-blue-600 rounded px-3 py-1 shadow-sm transition-colors cursor-pointer whitespace-nowrap">
+                                Tampilkan Kekeruhan & TDS
+                            </button>
+                        </div>
+                        <div
+                            class="flex gap-4 md:gap-2 sm:gap-1 text-[10px] sm:text-[8px] font-bold flex-wrap justify-center md:justify-end">
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-[#4F46E5]"></span><span
+                                    class="hidden sm:inline">pH</span></span>
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-[#8B5CF6]"></span><span
+                                    class="hidden sm:inline">Kekeruhan</span></span>
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-[#F59E0B]"></span><span
+                                    class="hidden sm:inline">Suhu</span></span>
+                            <span class="flex items-center gap-1.5"><span
+                                    class="w-2.5 h-2.5 rounded-full bg-[#0EA5E9]"></span><span
+                                    class="hidden sm:inline">TDS</span></span>
+                        </div>
+                    </div>
+                    <div class="w-full" style="height:calc(100% - 40px);">
+                        <canvas id="chart-trend-24h"></canvas>
+                    </div>
+                </div>
+
+
+            </main>
+
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+            <script src="js/firebase-config.js"></script>
+            <script src="js/dashboard.js?v=3"></script>
+            <script src="js/sidebar.js"></script>
+        </div>
+    </div>
+</body>
+
+</html>

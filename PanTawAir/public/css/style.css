@@ -1,0 +1,1005 @@
+/* ============================================================
+   PANTAWAIR — SISTEM MONITORING AIR
+   File CSS Utama
+   Digunakan oleh: index.html, log-alert.html & maintenance.html
+   ============================================================ */
+
+
+/* ============================================================
+   🎨 PUSAT KENDALI WARNA, UKURAN & EFEK
+   ============================================================
+   Semua variabel ada di sini. Kalau mau ganti warna atau ukuran,
+   cukup ubah nilainya di bagian ini saja — otomatis berubah
+   di seluruh website tanpa harus cari satu-satu.
+   ============================================================ */
+:root {
+    /* --- PALET WARNA BIRU (Warna Utama Website) --- */
+    --biru-paling-muda: #EFF6FF;       /* Latar belakang sangat terang */
+    --biru-muda: #DBEAFE;              /* Latar belakang terang */
+    --biru-muda-sedang: #BFDBFE;       /* Scrollbar, border halus */
+    --biru-sedang-muda: #93C5FD;       /* Scrollbar hover, aksen */
+    --biru-sedang: #60A5FA;            /* Aksen ikon, label */
+    --biru-utama: #3B82F6;             /* Warna utama tombol & link */
+    --biru-utama-gelap: #2563EB;       /* Warna tombol lebih gelap */
+    --biru-gelap: #1D4ED8;             /* Warna gradient paling gelap */
+    --biru-paling-gelap: #1E40AF;      /* Reserved: biru sangat gelap */
+    --biru-langit: #0EA5E9;            /* Aksen biru langit (sky) */
+
+    /* --- WARNA STATUS (Hijau, Merah, Kuning, Oranye) --- */
+    --hijau-sukses: #10B981;           /* Berhasil, WQI bagus */
+    --hijau-sukses-gelap: #059669;     /* Gradient hijau gelap */
+    --merah-bahaya: #EF4444;           /* Error, WQI buruk */
+    --merah-bahaya-gelap: #DC2626;     /* Gradient merah gelap */
+    --kuning-peringatan: #F59E0B;      /* Peringatan, offline */
+    --kuning-peringatan-gelap: #D97706;/* Gradient kuning gelap */
+    --oranye: #F97316;                 /* WQI rendah */
+    --merah-muda-terang: #F87171;      /* Progress bar bahaya */
+    --kuning-terang: #FBBF24;          /* Progress bar peringatan */
+    --ungu-aksen: rgba(99, 102, 241, 0.08);  /* Aksen tombol maintenance */
+    --ungu-aksen-border: rgba(99, 102, 241, 0.2); /* Border tombol maintenance */
+    --ungu-aksen-hover: rgba(99, 102, 241, 0.12); /* Hover tombol maintenance */
+    --ungu-aksen-shadow: rgba(99, 102, 241, 0.15); /* Shadow tombol maintenance */
+
+    /* --- WARNA ALERT BANNER --- */
+    --kuning-bg-terang: #FFFBEB;       /* Latar banner darurat */
+    --kuning-bg-sedang: #FEF3C7;       /* Gradient banner darurat */
+    --kuning-border-terang: #FDE68A;   /* Border banner darurat */
+
+    /* --- WARNA TEKS --- */
+    --teks-utama: #0F172A;             /* Warna tulisan body */
+    --teks-gelap: #1E293B;             /* Nilai angka sensor */
+    --teks-abu: #475569;               /* Teks standar sensor */
+
+    /* --- EFEK KACA (GLASSMORPHISM) --- */
+    --kaca-putih-tipis: rgba(255, 255, 255, 0.65);   /* Background kaca tipis */
+    --kaca-putih-tebal: rgba(255, 255, 255, 0.82);   /* Background kaca tebal */
+    --kaca-border: rgba(255, 255, 255, 0.45);         /* Border kaca */
+    --kaca-biru: rgba(59, 130, 246, 0.06);            /* Overlay biru sangat tipis */
+    --cahaya-dalam-tipis: rgba(255, 255, 255, 0.7);   /* Cahaya dalam (inset) tipis */
+    --cahaya-dalam-tebal: rgba(255, 255, 255, 0.8);   /* Cahaya dalam (inset) tebal */
+    --cahaya-dalam-kuat: rgba(255, 255, 255, 0.9);    /* Cahaya dalam (inset) kuat */
+    --kaca-putih-90: rgba(255, 255, 255, 0.9);        /* BG kaca 90% */
+    --kaca-putih-95: rgba(255, 255, 255, 0.95);       /* BG kaca 95% */
+    --kaca-biru-muda-85: rgba(248, 251, 255, 0.85);   /* BG biru sangat muda 85% */
+    --kaca-biru-muda-80: rgba(239, 246, 255, 0.8);    /* BG biru muda 80% */
+    --kaca-biru-muda-90: rgba(239, 246, 255, 0.9);    /* BG biru muda 90% */
+
+    /* --- BORDER BERULANG --- */
+    --border-biru-halus: rgba(191, 219, 254, 0.35);   /* Border tipis biru */
+    --border-biru-sedang: rgba(191, 219, 254, 0.4);   /* Border sedang biru */
+    --border-biru-tebal: rgba(191, 219, 254, 0.5);    /* Border tebal biru */
+    --border-biru-hover: rgba(147, 197, 253, 0.5);    /* Border saat di-hover */
+    --border-biru-hover-kuat: rgba(147, 197, 253, 0.6);/* Border hover lebih kuat */
+    --border-biru-ring: rgba(147, 197, 253, 0.2);     /* Ring/outline halus saat hover */
+
+    /* --- BAYANGAN (SHADOW) --- */
+    --bayangan-biru: rgba(59, 130, 246, 0.12);        /* Bayangan biru normal */
+    --bayangan-biru-kuat: rgba(59, 130, 246, 0.22);   /* Bayangan biru saat hover */
+    --bayangan-biru-ringan: rgba(59, 130, 246, 0.08); /* Bayangan biru sangat ringan */
+    --bayangan-biru-tombol: rgba(59, 130, 246, 0.3);  /* Bayangan tombol biru */
+    --bayangan-biru-tombol-hover: rgba(59, 130, 246, 0.4); /* Bayangan tombol hover */
+    --bayangan-hitam-tipis: rgba(0, 0, 0, 0.03);      /* Bayangan hitam sangat tipis */
+    --bayangan-hitam-sedang: rgba(0, 0, 0, 0.04);     /* Bayangan hitam tipis */
+    --bayangan-hitam-normal: rgba(0, 0, 0, 0.15);     /* Bayangan hitam normal */
+    --bayangan-hitam-ringan: rgba(0, 0, 0, 0.1);      /* Bayangan hitam ringan */
+    --bayangan-overlay: rgba(15, 23, 42, 0.4);        /* Overlay gelap dialog */
+
+    /* --- EFEK GAUGE WQI (Lingkaran Skor Air) --- */
+    --gauge-hijau-glow: rgba(16, 185, 129, 0.3);      /* Cahaya hijau gauge */
+    --gauge-hijau-glow-kuat: rgba(16, 185, 129, 0.5); /* Cahaya hijau kuat */
+
+    /* --- TRANSISI & ANIMASI --- */
+    --transisi-halus: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);  /* Transisi utama */
+    --transisi-cepat: all 0.3s ease;    /* Transisi cepat */
+    --transisi-super-cepat: all 0.2s ease; /* Transisi sangat cepat */
+
+    /* --- UKURAN SUDUT MELENGKUNG --- */
+    --sudut-kartu: 14px;               /* Sudut kotak sensor & toast */
+    --sudut-bulat-penuh: 50%;          /* Lingkaran penuh (ikon) */
+    --sudut-badge: 20px;               /* Sudut badge standar sensor */
+    --sudut-scrollbar: 10px;           /* Sudut scrollbar */
+
+    /* --- UKURAN IKON SENSOR --- */
+    --ikon-sensor-besar: 56px;         /* Ikon sensor di layout orbital */
+    --ikon-sensor-kecil: 48px;         /* Ikon sensor di dalam kartu */
+
+    /* --- GRADIENT SCROLLBAR (dipakai di 3 tempat) --- */
+    --scrollbar-gradient: linear-gradient(180deg, var(--biru-muda-sedang), var(--biru-sedang-muda));
+    --scrollbar-gradient-hover: linear-gradient(180deg, var(--biru-sedang-muda), var(--biru-sedang));
+
+    /* --- GRADIENT KACA UTAMA (dipakai berulang) --- */
+    --gradient-kaca-utama: linear-gradient(135deg, var(--kaca-putih-90), var(--kaca-biru-muda-85));
+    --gradient-kaca-sensor: linear-gradient(135deg, var(--kaca-putih-95), var(--kaca-biru-muda-80));
+
+    /* --- FONT UTAMA --- */
+    --font-utama: 'Plus Jakarta Sans', sans-serif;
+}
+
+
+/* ============================================================
+   📄 DASAR HALAMAN (BODY)
+   Latar belakang gradient animasi + bola dekoratif melayang
+   ============================================================ */
+body {
+    font-family: var(--font-utama);
+    background: linear-gradient(135deg, #E8F0FE 0%, #F0F4F8 25%, var(--biru-muda) 50%, #F0F7FF 75%, #EEF2FF 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    color: var(--teks-utama);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Animasi latar belakang bergerak perlahan */
+@keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    25%  { background-position: 50% 0%; }
+    50%  { background-position: 100% 50%; }
+    75%  { background-position: 50% 100%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Bola dekoratif melayang kanan atas */
+body::before {
+    content: '';
+    position: fixed;
+    top: -15%;
+    right: -10%;
+    width: 45vw;
+    height: 45vw;
+    max-width: 600px;
+    max-height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.10) 0%, rgba(147, 197, 253, 0.05) 50%, transparent 70%);
+    border-radius: var(--sudut-bulat-penuh);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb1 18s ease-in-out infinite;
+}
+
+/* Bola dekoratif melayang kiri bawah */
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -15%;
+    left: -10%;
+    width: 40vw;
+    height: 40vw;
+    max-width: 500px;
+    max-height: 500px;
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.08) 0%, rgba(191, 219, 254, 0.04) 50%, transparent 70%);
+    border-radius: var(--sudut-bulat-penuh);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb2 22s ease-in-out infinite;
+}
+
+/* Animasi melayang bola 1 */
+@keyframes floatOrb1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(-30px, 20px) scale(1.05); }
+    66%      { transform: translate(20px, -15px) scale(0.97); }
+}
+
+/* Animasi melayang bola 2 */
+@keyframes floatOrb2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(25px, -20px) scale(1.04); }
+    66%      { transform: translate(-15px, 25px) scale(0.96); }
+}
+
+
+/* ============================================================
+   🃏 KARTU UMUM (CARD SHADOW)
+   Efek bayangan untuk semua elemen kartu
+   ============================================================ */
+.card-shadow {
+    box-shadow:
+        0 4px 20px -5px var(--bayangan-biru),
+        0 1px 3px var(--bayangan-hitam-tipis);
+    transition: var(--transisi-halus);
+}
+
+.card-shadow:hover {
+    box-shadow:
+        0 8px 32px -4px var(--bayangan-biru-kuat),
+        0 2px 8px var(--bayangan-hitam-sedang);
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   📌 HEADER (BAR ATAS)
+   Bar navigasi paling atas dengan efek kaca
+   ============================================================ */
+.header-enhanced {
+    background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(239,246,255,0.88)) !important;
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid var(--border-biru-sedang) !important;
+    box-shadow:
+        0 4px 20px -2px var(--bayangan-biru),
+        0 1px 2px var(--bayangan-hitam-tipis),
+        inset 0 1px 0 var(--cahaya-dalam-tebal);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Garis biru tipis di bawah header */
+.header-enhanced::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--biru-sedang), var(--biru-utama), var(--biru-sedang), transparent);
+    opacity: 0.6;
+}
+
+/* Tulisan logo "PanTawAir" bergradient */
+.brand-gradient {
+    background: linear-gradient(135deg, var(--biru-utama-gelap), var(--biru-utama), var(--biru-langit));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+
+/* ============================================================
+   📋 SIDEBAR (MENU SAMPING KIRI)
+   Panel navigasi di sisi kiri dengan efek gradient
+   ============================================================ */
+.sidebar-enhanced {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 40%, #F0F7FF 100%) !important;
+    border: 1px solid var(--border-biru-halus) !important;
+    box-shadow:
+        4px 0 24px -4px var(--bayangan-biru),
+        0 1px 3px var(--bayangan-hitam-tipis);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hiasan gradient tipis di atas sidebar */
+.sidebar-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Menu yang sedang aktif (biru menyala) */
+.nav-active-glow {
+    background: linear-gradient(135deg, var(--biru-utama), var(--biru-utama-gelap)) !important;
+    box-shadow:
+        0 4px 16px rgba(59, 130, 246, 0.35),
+        0 2px 4px rgba(59, 130, 246, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    position: relative;
+}
+
+/* Efek kilau di atas menu aktif */
+.nav-active-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Efek shimmer saat hover menu non-aktif */
+.nav-hover-shimmer:hover {
+    background: linear-gradient(135deg, var(--kaca-biru), rgba(59, 130, 246, 0.03)) !important;
+    color: var(--biru-utama-gelap) !important;
+    transform: translateX(2px);
+    transition: var(--transisi-cepat);
+}
+
+/* Efek hover tombol logout (merah) */
+.logout-btn-enhanced:hover {
+    box-shadow:
+        0 4px 16px rgba(239, 68, 68, 0.2),
+        0 2px 4px rgba(239, 68, 68, 0.1);
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   📦 KARTU KONTEN UTAMA
+   Kotak utama untuk menampilkan isi halaman
+   ============================================================ */
+.content-card {
+    background: var(--gradient-kaca-utama) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-biru-halus) !important;
+    box-shadow:
+        0 4px 20px -4px var(--bayangan-biru),
+        0 1px 3px var(--bayangan-hitam-tipis),
+        inset 0 1px 0 var(--cahaya-dalam-tipis);
+    transition: var(--transisi-halus);
+}
+
+.content-card:hover {
+    box-shadow:
+        0 8px 32px -4px var(--bayangan-biru-kuat),
+        0 2px 8px var(--bayangan-hitam-sedang),
+        inset 0 1px 0 var(--cahaya-dalam-tebal);
+    transform: translateY(-2px);
+    border-color: var(--border-biru-hover) !important;
+}
+
+
+/* ============================================================
+   📜 PANEL AKTIVITAS (Aktivitas Terbaru di Dashboard)
+   ============================================================ */
+#activity-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+#activity-list::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-gradient);
+    border-radius: var(--sudut-scrollbar);
+}
+
+
+/* ============================================================
+   📊 HEADER BAGIAN CHART / TABEL
+   Garis vertikal biru di samping judul section
+   ============================================================ */
+.chart-header-stripe {
+    position: relative;
+    padding-left: 16px;
+}
+
+.chart-header-stripe::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--biru-sedang), var(--biru-utama-gelap));
+}
+
+
+/* ============================================================
+   🔔 NOTIFIKASI TOAST (Pop-up kecil di kanan bawah)
+   Muncul saat ada aksi berhasil/gagal/info
+   ============================================================ */
+#toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: var(--sudut-kartu);
+    font-family: var(--font-utama);
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 8px 24px var(--bayangan-hitam-normal);
+    animation: slideInToast 0.35s ease forwards;
+    pointer-events: auto;
+    min-width: 220px;
+    backdrop-filter: blur(8px);
+}
+
+/* Warna toast berdasarkan tipe */
+.toast.success { background: linear-gradient(135deg, var(--hijau-sukses), var(--hijau-sukses-gelap)); }
+.toast.error   { background: linear-gradient(135deg, var(--merah-bahaya), var(--merah-bahaya-gelap)); }
+.toast.info    { background: linear-gradient(135deg, var(--biru-utama), var(--biru-utama-gelap)); }
+
+/* Animasi toast masuk dari bawah */
+@keyframes slideInToast {
+    from { opacity: 0; transform: translateY(16px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Animasi toast hilang */
+@keyframes fadeOutToast {
+    to { opacity: 0; transform: translateY(8px) scale(0.95); }
+}
+
+
+/* ============================================================
+   ⚠️ BANNER OFFLINE (Muncul saat koneksi terputus)
+   ============================================================ */
+#offline-banner {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9998;
+    background: linear-gradient(90deg, var(--kuning-peringatan), var(--kuning-peringatan-gelap));
+    color: white;
+    font-family: var(--font-utama);
+    font-size: 10px;
+    font-weight: 800;
+    text-align: center;
+    padding: 6px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+#offline-banner.show { display: block; }
+
+
+/* ============================================================
+   ❓ DIALOG KONFIRMASI HAPUS (Log Alert)
+   Pop-up "Yakin hapus semua data?"
+   ============================================================ */
+#confirm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: var(--bayangan-overlay);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+}
+
+#confirm-overlay.show { display: flex; }
+
+#confirm-box {
+    background: linear-gradient(135deg, #FFFFFF, #F8FBFF);
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow:
+        0 24px 48px var(--bayangan-hitam-normal),
+        0 0 0 1px rgba(191, 219, 254, 0.3);
+    animation: slideInToast 0.3s ease forwards;
+}
+
+
+/* ============================================================
+   🎯 LAYOUT ORBITAL (Dashboard — Tampilan Sensor + Gauge WQI)
+   Tata letak 3 kolom: Sensor Kiri | Gauge Tengah | Sensor Kanan
+   ============================================================ */
+.orbital-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: 16px;
+}
+
+/* Kolom kiri & kanan (masing-masing 2 sensor vertikal) */
+.orbital-side {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
+    height: 80%;
+    min-width: 90px;
+    flex-shrink: 0;
+}
+
+/* Tiap kotak sensor */
+.orbital-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    gap: 0;
+    transition: transform 0.3s ease;
+}
+
+.orbital-cell:hover { transform: scale(1.02); }
+
+/* Area tengah (lingkaran gauge WQI) */
+.orbital-center {
+    position: relative;
+    flex: 1;
+    max-width: 280px;
+    aspect-ratio: 1;
+}
+
+
+/* ============================================================
+   ⭕ GAUGE WQI (Lingkaran Skor Kualitas Air)
+   ============================================================ */
+.orbital-gauge {
+    width: 100%;
+    height: 100%;
+    transform: rotate(180deg);
+}
+
+/* Jalur lingkaran (track abu-abu muda) */
+.gauge-track {
+    fill: none;
+    stroke: var(--biru-muda);
+    stroke-width: 16;
+    stroke-linecap: round;
+    stroke-dasharray: 339.29 678.58;
+}
+
+/* Isian lingkaran (warna berubah sesuai skor) */
+.gauge-fill {
+    fill: none;
+    stroke: var(--hijau-sukses);
+    stroke-width: 16;
+    stroke-linecap: round;
+    stroke-dasharray: 339.29 678.58;
+    stroke-dashoffset: 339.29;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
+    filter: drop-shadow(0 0 6px var(--gauge-hijau-glow));
+}
+
+/* Teks di tengah gauge (skor, status, deskripsi) */
+.orbital-center-content {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+    width: 95%;
+}
+
+.orbital-center-content #wqi-label  { font-size: 10px !important; letter-spacing: 0.1em; margin-bottom: 4px; }
+.orbital-center-content #wqi-score  { font-size: 52px !important; font-weight: 800; line-height: 1; }
+.orbital-center-content #wqi-status { font-size: 24px !important; font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
+.orbital-center-content #wqi-desc   { font-size: 16px !important; font-weight: 700 !important; max-width: 300px; line-height: 1.4; }
+
+/* Animasi cahaya berdenyut pada gauge */
+@keyframes gaugeGlow {
+    0%, 100% { filter: drop-shadow(0 0 6px var(--gauge-hijau-glow)); }
+    50%      { filter: drop-shadow(0 0 14px var(--gauge-hijau-glow-kuat)); }
+}
+
+.gauge-fill.animate-glow { animation: gaugeGlow 2.5s ease-in-out infinite; }
+
+
+/* ============================================================
+   📡 KOTAK SENSOR (pH, Suhu, Kekeruhan, TDS)
+   Kartu yang menampilkan data dari masing-masing sensor
+   ============================================================ */
+
+/* Ikon bulat di setiap sensor */
+.orbital-node-icon {
+    width: var(--ikon-sensor-besar);
+    height: var(--ikon-sensor-besar);
+    border-radius: var(--sudut-bulat-penuh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        0 0 0 3px var(--kaca-biru);
+    transition: var(--transisi-cepat);
+}
+
+/* Baris angka sensor + satuannya */
+.orbital-value-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+}
+
+/* Angka besar sensor (misal: 7.20) */
+.orbital-node-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--teks-gelap);
+    line-height: 1;
+}
+
+/* Satuan sensor (misal: pH, °C, NTU) */
+.orbital-node-unit {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--biru-sedang);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Label nama sensor di atas kartu */
+.orbital-node-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--biru-sedang);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+}
+
+/* Badge "Standar: 6.5 – 8.5" di bawah nilai */
+.orbital-node-standard {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--teks-abu);
+    background: linear-gradient(135deg, var(--biru-paling-muda), #F1F5F9);
+    padding: 3px 10px;
+    border-radius: var(--sudut-badge);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+    white-space: nowrap;
+    border: 1px solid var(--border-biru-sedang);
+}
+
+/* Kartu sensor (container utama) */
+.sensor-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    background: var(--gradient-kaca-sensor);
+    border: 1px solid var(--border-biru-sedang);
+    border-radius: var(--sudut-kartu);
+    width: 100%;
+    min-width: 160px;
+    transition: var(--transisi-halus);
+    box-shadow:
+        0 2px 12px -2px var(--bayangan-biru),
+        inset 0 1px 0 var(--cahaya-dalam-tebal);
+}
+
+.sensor-card:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,1), var(--kaca-biru-muda-90));
+    border-color: var(--border-biru-hover-kuat);
+    box-shadow:
+        0 8px 24px -4px var(--bayangan-biru-kuat),
+        0 0 0 1px var(--border-biru-ring),
+        inset 0 1px 0 var(--cahaya-dalam-kuat);
+    transform: translateY(-2px);
+}
+
+/* Isi kartu sensor (ikon + angka) */
+.sensor-card-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.sensor-card-values {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    align-items: flex-start;
+}
+
+/* Ikon sensor di dalam kartu (lebih kecil) */
+.sensor-card .orbital-node-icon {
+    width: var(--ikon-sensor-kecil);
+    height: var(--ikon-sensor-kecil);
+    min-width: var(--ikon-sensor-kecil);
+}
+
+.sensor-card .orbital-value-row {
+    justify-content: flex-start;
+    gap: 6px;
+}
+
+/* Badge standar di dalam kartu sensor */
+.sensor-card .orbital-node-standard {
+    margin-top: 0;
+    font-size: 10px;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, var(--kaca-biru), rgba(148, 163, 184, 0.06));
+}
+
+
+/* ============================================================
+   ✨ ANIMASI MASUK ELEMEN (Fade-in saat halaman dimuat)
+   ============================================================ */
+
+/* Animasi slide masuk untuk aktivitas baru */
+@keyframes slide-in {
+    from { opacity: 0; transform: translateX(10px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in { animation: slide-in 0.35s ease forwards; }
+
+/* Scrollbar panel aktivitas */
+.activity-panel-list::-webkit-scrollbar { width: 3px; }
+.activity-panel-list::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-gradient);
+    border-radius: var(--sudut-scrollbar);
+}
+
+/* Animasi fade-in bertahap saat halaman dimuat */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in         { animation: fadeInUp 0.5s ease forwards; }
+.animate-fade-in-delay-1 { animation: fadeInUp 0.5s ease 0.1s forwards; opacity: 0; }
+.animate-fade-in-delay-2 { animation: fadeInUp 0.5s ease 0.2s forwards; opacity: 0; }
+.animate-fade-in-delay-3 { animation: fadeInUp 0.5s ease 0.3s forwards; opacity: 0; }
+
+
+/* ============================================================
+   📂 SIDEBAR BISA DILIPAT (Collapse/Expand)
+   ============================================================ */
+
+/* Transisi halus saat sidebar berubah lebar */
+#sidebar { transition: var(--transisi-cepat); }
+
+/* Lebar sidebar saat dilipat */
+html.sidebar-collapsed #sidebar { width: 76px !important; }
+
+/* Sembunyikan teks menu saat dilipat */
+html.sidebar-collapsed #sidebar .sidebar-text {
+    opacity: 0; width: 0; overflow: hidden;
+    white-space: nowrap; display: none;
+}
+
+/* Pusatkan ikon menu saat dilipat */
+html.sidebar-collapsed #sidebar nav a,
+html.sidebar-collapsed #sidebar button {
+    justify-content: center;
+    padding-left: 0; padding-right: 0;
+}
+
+html.sidebar-collapsed #sidebar nav a { gap: 0; }
+html.sidebar-collapsed #sidebar button { gap: 0; }
+
+/* Ikon tetap rapi saat dilipat */
+#sidebar i { flex-shrink: 0; }
+
+/* Ikon panah berubah arah saat dilipat */
+.sidebar-icon-collapse::before { content: "\f053"; /* panah kiri */ }
+html.sidebar-collapsed .sidebar-icon-collapse::before { content: "\f054"; /* panah kanan */ }
+
+
+/* ============================================================
+   🖥️ LAYOUT DESKTOP (Jarak Sensor ke Gauge)
+   ============================================================ */
+.orbital-cell.mr-32 { margin-right: 128px; }
+.orbital-cell.ml-32 { margin-left: 128px; }
+
+
+/* ============================================================
+   📋 TABEL LOG ALERT
+   ============================================================ */
+.table-enhanced thead tr {
+    background: linear-gradient(135deg, var(--biru-paling-muda), #F1F5F9) !important;
+}
+
+.table-enhanced tbody tr { transition: var(--transisi-super-cepat); }
+.table-enhanced tbody tr:nth-child(even) { background: rgba(239, 246, 255, 0.3); }
+.table-enhanced tbody tr:hover { background: var(--kaca-biru) !important; }
+
+
+/* ============================================================
+   🔘 TOMBOL GRADIENT BIRU (Tombol Login)
+   ============================================================ */
+.btn-gradient-blue {
+    background: linear-gradient(135deg, var(--biru-utama), var(--biru-utama-gelap), var(--biru-utama));
+    background-size: 200% 200%;
+    animation: btnGradient 3s ease infinite;
+    box-shadow:
+        0 4px 16px var(--bayangan-biru-tombol),
+        0 2px 4px rgba(59, 130, 246, 0.15);
+    transition: var(--transisi-cepat);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efek kilau geser saat hover */
+.btn-gradient-blue::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-gradient-blue:hover::before { left: 100%; }
+
+.btn-gradient-blue:hover {
+    box-shadow:
+        0 8px 24px var(--bayangan-biru-tombol-hover),
+        0 4px 8px rgba(59, 130, 246, 0.2);
+    transform: translateY(-1px);
+}
+
+@keyframes btnGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+/* ============================================================
+   ✏️ INPUT FIELD (Kotak Cari di Log Alert)
+   ============================================================ */
+.input-enhanced {
+    border: 1px solid var(--border-biru-tebal) !important;
+    background: rgba(248, 251, 255, 0.8) !important;
+    transition: var(--transisi-cepat);
+}
+
+.input-enhanced:focus {
+    border-color: var(--biru-sedang) !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 2px 8px var(--bayangan-biru-ringan) !important;
+    background: var(--kaca-putih-95) !important;
+}
+
+
+/* ============================================================
+   🔧 HALAMAN MAINTENANCE (Perawatan Filter)
+   ============================================================ */
+.maintenance-card {
+    background: linear-gradient(135deg, var(--kaca-putih-90), var(--kaca-biru-muda-80)) !important;
+    border: 1px solid var(--border-biru-sedang) !important;
+    box-shadow:
+        0 4px 20px -4px var(--bayangan-biru),
+        inset 0 1px 0 var(--cahaya-dalam-tipis);
+}
+
+/* Tombol "Saya Baru Saja Mencuci Filter" */
+.maintenance-action-btn {
+    background: linear-gradient(135deg, var(--biru-paling-muda), var(--ungu-aksen)) !important;
+    border: 1px solid var(--ungu-aksen-border) !important;
+    transition: var(--transisi-cepat);
+}
+
+.maintenance-action-btn:hover {
+    background: linear-gradient(135deg, var(--biru-muda), var(--ungu-aksen-hover)) !important;
+    box-shadow: 0 4px 16px var(--ungu-aksen-shadow);
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   🔐 HALAMAN LOGIN
+   ============================================================ */
+.login-bg {
+    background: linear-gradient(135deg, #E8F0FE 0%, var(--biru-muda) 30%, #F0F7FF 60%, #EEF2FF 100%) !important;
+    background-size: 300% 300%;
+    animation: gradientShift 15s ease infinite;
+}
+
+.login-card-enhanced {
+    box-shadow:
+        0 24px 60px rgba(59, 130, 246, 0.1),
+        0 8px 24px var(--bayangan-hitam-sedang),
+        0 0 0 1px rgba(191, 219, 254, 0.3) !important;
+}
+
+/* Bola dekoratif di halaman login */
+.login-orb-1 { animation: floatOrb1 12s ease-in-out infinite !important; }
+.login-orb-2 { animation: floatOrb2 16s ease-in-out infinite !important; }
+
+/* Input field di halaman login */
+.login-input-enhanced {
+    border: 1.5px solid var(--border-biru-tebal) !important;
+    background: linear-gradient(135deg, rgba(248, 251, 255, 0.9), var(--kaca-putih-95)) !important;
+    transition: var(--transisi-cepat);
+}
+
+.login-input-enhanced:focus {
+    border-color: var(--biru-sedang) !important;
+    box-shadow:
+        0 0 0 4px rgba(59, 130, 246, 0.12),
+        0 2px 12px var(--bayangan-biru-ringan) !important;
+    background: #FFFFFF !important;
+}
+
+/* Panel gradient biru di sisi kiri login */
+.login-panel-gradient {
+    background: linear-gradient(135deg, var(--biru-gelap) 0%, var(--biru-utama-gelap) 30%, var(--biru-utama) 60%, var(--biru-langit) 100%) !important;
+}
+
+
+/* ============================================================
+   📜 SCROLLBAR GLOBAL (Semua halaman)
+   ============================================================ */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-gradient);
+    border-radius: var(--sudut-scrollbar);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-gradient-hover);
+}
+
+
+/* ============================================================
+   🔢 URUTAN LAYER (Z-INDEX)
+   Mengatur elemen mana yang tampil di depan/belakang
+   ============================================================ */
+body::before, body::after { z-index: 0; }
+header, aside, main, .flex-1 { position: relative; z-index: 1; }
+
+
+/* ============================================================
+   💊 BADGE & PILL (Penanda Jumlah di Panel Aktivitas)
+   ============================================================ */
+.badge-count {
+    background: var(--kaca-putih-90);
+    border: 1px solid var(--border-biru-sedang);
+    box-shadow: 0 2px 8px var(--bayangan-biru-ringan);
+}
+
+
+/* ============================================================
+   🔍 BAR FILTER (Pencarian & Dropdown di Log Alert)
+   ============================================================ */
+.filter-bar-glass {
+    background: linear-gradient(135deg, rgba(255,255,255,0.88), rgba(239,246,255,0.82)) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-biru-halus) !important;
+    box-shadow:
+        0 4px 16px -4px var(--bayangan-biru),
+        inset 0 1px 0 var(--cahaya-dalam-tipis);
+}
+
+
+/* ============================================================
+   📅 BANNER PERINGATAN (Darurat & Offline)
+   ============================================================ */
+.alert-banner {
+    display: none;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    font-weight: 700;
+    font-size: 13px;
+    align-items: center;
+    gap: 12px;
+    animation: slideInToast 0.4s ease forwards;
+    box-shadow: 0 8px 16px var(--bayangan-hitam-ringan);
+}
+
+.alert-banner.show { display: flex; }
+
+/* Banner kuning: kualitas air memburuk */
+.alert-banner.emergency {
+    background: linear-gradient(135deg, var(--kuning-bg-terang), var(--kuning-bg-sedang));
+    border: 1px solid var(--kuning-border-terang);
+    color: var(--kuning-peringatan-gelap);
+}
+
+/* Banner abu-abu: perangkat offline */
+.alert-banner.offline {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    border: 1px solid #cbd5e1;
+    color: #475569;
+}
+
+.alert-banner i { font-size: 20px; }
+
+/* Animasi ikon berdenyut di banner */
+.alert-pulse { animation: bannerPulse 2s infinite; }
+
+@keyframes bannerPulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
