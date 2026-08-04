@@ -84,7 +84,6 @@ int jamTerakhirGrafik = -1;
 bool statusKoneksiFirebase = false;
 unsigned long totalWaktuTransmisi = 0;
 unsigned long totalPaketDikirim = 0;
-unsigned long totalPaketGagal = 0;
 unsigned long totalPaketBerhasil = 0;
 float rataRataDelay = 0;
 float persentasePacketLoss = 0;
