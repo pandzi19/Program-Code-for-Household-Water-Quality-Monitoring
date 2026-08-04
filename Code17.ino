@@ -164,14 +164,14 @@ float hitungNilaiTDS() {
   float hasilTDS = (TDS_SLOPE * nilaiTDSSebelumRegresi) + TDS_OFFSET;
   if (hasilTDS < 0.0) hasilTDS = 0.0;
   
-  return hasilTDS + 55.0;
+  return hasilTDS;
 }
 
 float hitungNilaiKekeruhan() {
   float hasilKekeruhan = (KEKERUHAN_SLOPE * voltaseKekeruhan) + KEKERUHAN_OFFSET;
   if (hasilKekeruhan < 0.0) hasilKekeruhan = 0.0;
   
-  return hasilKekeruhan - 25.0;
+  return hasilKekeruhan;
 }
 
 void hitungNilaiSemuaSensor() {
