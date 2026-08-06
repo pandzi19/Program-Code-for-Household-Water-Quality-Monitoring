@@ -344,7 +344,7 @@ void periksaDanKirimPeringatanSistem(float rataRataPH, float rataRataTDS, float 
       jsonPeringatanWQI.set("value", skorWQI);
       jsonPeringatanWQI.set("category", kategoriWQI);
 
-      String pesanSaran = "⚠️ Kualitas air berada pada kategori " + kategoriWQI + "\n\n";
+      String pesanSaran = "Kualitas air berada pada kategori " + kategoriWQI + "\n\n";
       pesanSaran += "Nilai WQI : " + String((float)skorWQI, 2) + "\n\n";
       
       if (kategoriWQI == "Buruk") {
