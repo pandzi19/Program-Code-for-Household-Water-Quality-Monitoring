@@ -8,8 +8,8 @@
 #include <addons/TokenHelper.h>
 #include <time.h>
 
-#define namaWiFi "(....)"
-#define sandiWiFi "(....)"
+#define namaWiFi "(...)"
+#define sandiWiFi "(...)"
 
 #define API_KEY "AIzaSyBHhRbZUXGQ5UMVIasbuoHybWp14QPcACA"
 #define DATABASE_URL "https://monitoring-kualitas-air-a4800-default-rtdb.asia-southeast1.firebasedatabase.app/"
@@ -296,17 +296,25 @@ void kirimRealtimeFirebase(float rataRataPH, float rataRataTDS, float rataRataKe
     totalWaktuTransmisi += delaySaatIni;
     totalPaketBerhasil++;
 
-    rataRataDelay = (float)totalWaktuTransmisi / totalPaketBerhasil;
+rataRataDelay = (float)totalWaktuTransmisi / totalPaketBerhasil;
     persentasePacketLoss = ((float)(totalPaketDikirim - totalPaketBerhasil) / totalPaketDikirim) * 100.0;
+
+    float lamaPengamatanDetik = millis() / 1000.0;
+    
+    float throughputPaket = (float)totalPaketBerhasil / lamaPengamatanDetik;
+    
+    float throughputBps = (totalPaketBerhasil * 150.0 * 8.0) / lamaPengamatanDetik;
 
     Serial.println("\n===== QoS =====");
     Serial.printf("Rata-Rata Delay : %.2f ms\n", rataRataDelay);
     Serial.printf("Packet Loss     : %.2f %%\n", persentasePacketLoss);
+    Serial.printf("Throughput      : %.2f bps (%.4f paket/s)\n", throughputBps, throughputPaket);
     Serial.println("================");
 
     FirebaseJson jsonKualitasJaringan;
     jsonKualitasJaringan.set("delay_ms", rataRataDelay);
     jsonKualitasJaringan.set("packet_loss_percent", persentasePacketLoss);
+    jsonKualitasJaringan.set("throughput_bps", throughputBps); // Menyimpan throughput ke Firebase
     jsonKualitasJaringan.set("timestamp/.sv", "timestamp");
 
     struct tm waktuJaringan;
